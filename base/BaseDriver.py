@@ -16,3 +16,7 @@ class Basedriver:
             if lastcount == pagelen:
                 match = True
         time.sleep(7)
+
+    def testmethod(self):
+        print("Testing conflict")
+
