@@ -17,6 +17,5 @@ class Basedriver:
                 match = True
         time.sleep(7)
 
-    def testmethod(self):
-        print("Testing conflict")
+
 
