@@ -19,3 +19,6 @@ class Basedriver:
 
 
 
+    def test_method_sdet1(self):
+        print("Sdet 1 adds code in another branch")
+        
