@@ -3,12 +3,15 @@ from pages.search_flights_results_page import SearchFlightResults
 from pages.yatra_launch_page import LaunchPage
 from selenium.webdriver.common.by import By
 from utilities.utils import Utils
+from ddt import ddt, data, unpack
+import unittest
 from selenium.webdriver.chrome.service import Service
 import time
 
 
 @pytest.mark.usefixtures("setup")
-class TestSearchAndVerifyFilter():
+@ddt
+class TestSearchAndVerifyFilter(unittest.TestCase):
 
     @pytest.fixture(autouse=True)
     def create_instance(self):
@@ -17,16 +20,17 @@ class TestSearchAndVerifyFilter():
         print("called")
         # self.sf_results = SearchFlightResults(self.driver, self.wait)
 
-
-    def test_search_flights(self):
+    @data(("New Delhi", "New York", "19/08/2024", "2 Stops"), ("Mumbai", "New York", "20/08/2024", "1 Stop"))
+    @unpack
+    def test_search_flights(self, goingfrom, goingto, date, stops):
 
        # self.launchp = LaunchPage(self.driver, self.wait)
 
-        self.launchp.departFrom("New Delhi")
+        self.launchp.departFrom(goingfrom)
 
-        self.launchp.goingTo("New York")
+        self.launchp.goingTo(goingto)
 
-        self.launchp.selectDate("09/08/2024")
+        self.launchp.selectDate(date)
 
         self.launchp.ClickSearch()
 
@@ -34,33 +38,11 @@ class TestSearchAndVerifyFilter():
 
         sf_results = SearchFlightResults(self.driver, self.wait)
 
-        sf_results.filterResults("2 Stops")
+        sf_results.filterResults(stops)
 
         all_stops = sf_results.get_filter_results()
         print(len(all_stops))
 
-        self.compare.assertTextfromList(all_stops, "2 Stops")
+        self.compare.assertTextfromList(all_stops, stops)
         print("end of first test")
 
-    # def test_search_flights_2(self):
-    #     print("In second test")
-    #     #self.launchp = LaunchPage(self.driver, self.wait)
-    #
-    #     self.launchp.departFrom("New Delhi")
-    #
-    #     self.launchp.goingTo("New York")
-    #
-    #     self.launchp.selectDate("09/08/2024")
-    #
-    #     self.launchp.ClickSearch()
-    #
-    #     self.launchp.scroll_page()
-    #
-    #     sf_results = SearchFlightResults(self.driver, self.wait)
-    #
-    #     sf_results.filterResults("1 Stop")
-    #
-    #     all_stops = sf_results.get_filter_results()
-    #     print(len(all_stops))
-    #
-    #     self.compare.assertTextfromList(all_stops, "1 Stop")

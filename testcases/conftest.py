@@ -21,8 +21,15 @@ def setup(request, browser):
     # driver = webdriver.Chrome(service=chrome_service)
 
     if browser == "chrome":
-        s = Service(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=s)
+        # s = Service(ChromeDriverManager().install())
+        # driver = webdriver.Chrome(service=s)
+
+        chrome_install = ChromeDriverManager().install()
+        folder = os.path.dirname(chrome_install)
+        chromedriver_path = os.path.join(folder, "chromedriver.exe")
+        chrome_service = Service(chromedriver_path)
+        driver = webdriver.Chrome(service=chrome_service)
+
     elif browser == "firefox":
         s = Service(GeckoDriverManager.install())
         driver = webdriver.Firefox(service = s)
