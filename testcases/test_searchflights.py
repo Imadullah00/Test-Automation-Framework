@@ -3,7 +3,7 @@ from pages.search_flights_results_page import SearchFlightResults
 from pages.yatra_launch_page import LaunchPage
 from selenium.webdriver.common.by import By
 from utilities.utils import Utils
-from ddt import ddt, data, unpack
+from ddt import ddt, data, file_data, unpack
 import unittest
 from selenium.webdriver.chrome.service import Service
 import time
@@ -20,8 +20,10 @@ class TestSearchAndVerifyFilter(unittest.TestCase):
         print("called")
         # self.sf_results = SearchFlightResults(self.driver, self.wait)
 
-    @data(("New Delhi", "New York", "19/08/2024", "2 Stops"), ("Mumbai", "New York", "20/08/2024", "1 Stop"))
-    @unpack
+    # @data(("New Delhi", "New York", "19/08/2024", "2 Stops"), ("Mumbai", "New York", "20/08/2024", "1 Stop"))
+    # @unpack
+
+    @file_data("../testdata/test_injson.json")
     def test_search_flights(self, goingfrom, goingto, date, stops):
 
        # self.launchp = LaunchPage(self.driver, self.wait)
